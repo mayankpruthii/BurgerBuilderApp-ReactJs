@@ -22,6 +22,7 @@ class BurgerBuilder extends Component {
         } ,
         purchasable: false,
         totalPrice : 5, 
+        purchasing: false
     }
 
     addIngredientHandler = (type) => {
@@ -58,6 +59,10 @@ class BurgerBuilder extends Component {
         this.updatePurchase(updatedIngredients);
     }
 
+    purchaseHandler = () => {
+        this.setState({purchasing: true})
+    }
+
     updatePurchase = (ingredients) => {
         
         const sum = Object.keys(ingredients)
@@ -71,6 +76,14 @@ class BurgerBuilder extends Component {
             this.setState({purchasable: sum > 0})
     }
 
+    purchaseContinueHandler = () => {
+        alert('you Continue')
+    }
+
+    purchaseCancelHandler = () => {
+        this.setState({purchasing: false})
+    }
+
     render(){
         // console.log(this.state.ingredients)
         const disabledInfo={ 
@@ -82,8 +95,14 @@ class BurgerBuilder extends Component {
 
         return(
             <Aux>
-                <Modal>
-                    <OrderSummary ingredients={this.state.ingredients} />
+                <Modal show={this.state.purchasing}
+                        modalClosed={this.purchaseCancelHandler}>
+                        <OrderSummary 
+                            ingredients={this.state.ingredients} 
+                            purchaseCanceled={this.purchaseCancelHandler}
+                            purchaseContinued={this.purchaseContinueHandler}
+                            price={this.state.totalPrice}
+                            />
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
@@ -91,7 +110,8 @@ class BurgerBuilder extends Component {
                     ingredientRemoved={this.removeIngredientHandler}
                     disabled={disabledInfo}
                     price={this.state.totalPrice}
-                    purchasable = {!this.state.purchasable}
+                    purchasable = {this.state.purchasable}
+                    ordered = {this.purchaseHandler}
                 />
             </Aux>
         )
