@@ -3,7 +3,7 @@ import './Toolbar.css';
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems'
 import DrawerToggle from '../../SideDrawer/DrawerToggle/DrawerToggle'
-import Aux from '../../../hoc/Aux'
+import Aux from '../../../hoc/Auxilliary'
 
 const toolbar = (props) => (
     <Aux>    
